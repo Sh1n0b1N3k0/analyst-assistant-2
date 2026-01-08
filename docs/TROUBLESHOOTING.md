@@ -256,6 +256,29 @@ Access to XMLHttpRequest has been blocked by CORS policy
 2. Проверьте настройки CORS в `backend/main.py`
 3. Если frontend на другом порту, добавьте его в `allow_origins`
 
+### Предупреждения npm при установке frontend
+
+**Симптомы:**
+```
+npm warn deprecated ...
+9 vulnerabilities (3 moderate, 6 high)
+```
+
+**Причина:**
+`react-scripts@5.0.1` использует некоторые устаревшие зависимости. Это нормально для разработки.
+
+**Решения:**
+
+1. **Для разработки:** Можно игнорировать эти предупреждения. Приложение будет работать нормально.
+
+2. **Если хотите исправить:**
+   ```powershell
+   npm audit fix
+   ```
+   ⚠️ Не используйте `npm audit fix --force` без необходимости - это может сломать совместимость.
+
+**Подробнее:** см. [frontend/NPM_WARNINGS.md](../frontend/NPM_WARNINGS.md)
+
 ## Получение помощи
 
 Если проблема не решена:
