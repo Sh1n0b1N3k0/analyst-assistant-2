@@ -3,11 +3,19 @@
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from database import engine, Base
+from database import engine, Base, DATABASE_URL
 from routers import import_requirements, export_requirements
 
 # Создание таблиц базы данных
-Base.metadata.create_all(bind=engine)
+# ВНИМАНИЕ: Для PostgreSQL используйте скрипт database/init_database.sql
+# Автоматическое создание через SQLAlchemy работает только для простых моделей
+# Для полной схемы с RBAC, компонентами и т.д. используйте SQL скрипт
+if "sqlite" in DATABASE_URL:
+    Base.metadata.create_all(bind=engine)
+else:
+    # Для PostgreSQL таблицы создаются через init_database.sql
+    # Здесь можно добавить проверку существования таблиц
+    pass
 
 app = FastAPI(
     title="Analyst Assistant API",
