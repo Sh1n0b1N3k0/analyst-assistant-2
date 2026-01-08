@@ -19,6 +19,8 @@ cd backend
 
 Или просто дважды кликните на файл `install.bat` в проводнике Windows.
 
+> ⚠️ **Важно в PowerShell:** Всегда используйте `.\` перед именем `.bat` файла (например, `.\install.bat`). Это требование безопасности PowerShell. В Command Prompt (cmd) можно использовать просто `install.bat`.
+
 **Frontend:**
 ```powershell
 cd frontend
@@ -31,7 +33,10 @@ cd backend
 .\install_ssl_fix.bat
 ```
 
-> ⚠️ **Важно для Windows:** Не используйте команду `chmod` - это команда Linux/Mac. В Windows `.bat` файлы уже исполняемые.
+> ⚠️ **Важно для Windows:**
+> - В **PowerShell** всегда используйте `.\` перед именем `.bat` файла (например, `.\install_ssl_fix.bat`)
+> - В **Command Prompt (cmd)** можно использовать просто `install_ssl_fix.bat`
+> - Не используйте команду `chmod` - это команда Linux/Mac. В Windows `.bat` файлы уже исполняемые
 
 ### Linux/Mac
 
