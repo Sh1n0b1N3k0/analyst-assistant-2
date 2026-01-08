@@ -33,7 +33,20 @@ analyst-assistant-2/
 ### Установка зависимостей
 
 **Windows:**
-```bash
+
+**PowerShell:**
+```powershell
+# Backend
+cd backend
+.\install.bat
+
+# Frontend
+cd frontend
+.\install.bat
+```
+
+**Command Prompt (cmd):**
+```cmd
 # Backend
 cd backend
 install.bat
@@ -42,6 +55,8 @@ install.bat
 cd frontend
 install.bat
 ```
+
+Или просто дважды кликните на файлы `.bat` в проводнике Windows.
 
 **Linux/Mac:**
 ```bash
@@ -57,8 +72,10 @@ chmod +x install.sh && ./install.sh
 Подробные инструкции см. в [INSTALL.md](INSTALL.md) и [docs/SETUP.md](docs/SETUP.md)
 
 > ⚠️ **Проблемы с SSL?** Если у вас ошибка `CERTIFICATE_VERIFY_FAILED`:
-> - **Windows:** Запустите `install_ssl_fix.bat` (просто дважды кликните или выполните в PowerShell)
-> - **Linux/Mac:** Выполните `chmod +x install_ssl_fix.sh && ./install_ssl_fix.sh`  
+> - **Windows PowerShell:** `.\install_ssl_fix.bat`
+> - **Windows Command Prompt:** `install_ssl_fix.bat`
+> - **Или просто дважды кликните** на файл в проводнике
+> - **Linux/Mac:** `chmod +x install_ssl_fix.sh && ./install_ssl_fix.sh`  
 > Подробнее: [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
 
 ### Запуск

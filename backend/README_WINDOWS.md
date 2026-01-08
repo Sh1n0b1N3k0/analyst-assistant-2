@@ -8,12 +8,23 @@
 2. Дважды кликните на файл `install_ssl_fix.bat`
 3. Дождитесь завершения установки
 
-### Вариант 2: Через PowerShell или Command Prompt
+### Вариант 2: Через PowerShell
 
 ```powershell
 cd backend
 .\install_ssl_fix.bat
 ```
+
+> ⚠️ **Важно в PowerShell:** Всегда используйте `.\` перед именем `.bat` файла. Это требование безопасности PowerShell.
+
+### Вариант 3: Через Command Prompt (cmd)
+
+```cmd
+cd backend
+install_ssl_fix.bat
+```
+
+> ℹ️ **В Command Prompt** можно использовать имя файла без `.\`
 
 ## Важные замечания для Windows
 

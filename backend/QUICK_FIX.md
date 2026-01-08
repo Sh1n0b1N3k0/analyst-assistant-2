@@ -5,12 +5,22 @@
 Если вы получили ошибку `CERTIFICATE_VERIFY_FAILED`:
 
 ### Windows:
+
+**PowerShell (обязательно используйте `.\`):**
 ```powershell
 cd backend
 .\install_ssl_fix.bat
 ```
 
-Или просто дважды кликните на `install_ssl_fix.bat` в проводнике.
+**Command Prompt (cmd):**
+```cmd
+cd backend
+install_ssl_fix.bat
+```
+
+**Или просто дважды кликните** на `install_ssl_fix.bat` в проводнике Windows.
+
+> ⚠️ **Важно:** В PowerShell всегда используйте `.\` перед именем `.bat` файла!
 
 ### Linux/Mac:
 ```bash
