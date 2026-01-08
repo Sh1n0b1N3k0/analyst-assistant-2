@@ -27,7 +27,11 @@ npm --version
 
 **Установка:**
 - Windows/Linux/Mac: [Скачать Node.js](https://nodejs.org/)
+  - ⚠️ **Важно для Windows:** При установке отметьте опцию **"Add to PATH"** (добавить в PATH)
   - npm устанавливается автоматически вместе с Node.js
+  - После установки **закройте и снова откройте PowerShell/терминал**
+  
+**Подробная инструкция для Windows:** см. [frontend/INSTALL_NODEJS.md](frontend/INSTALL_NODEJS.md)
 
 ## Рекомендуемые инструменты
 

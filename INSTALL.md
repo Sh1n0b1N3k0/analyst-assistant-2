@@ -168,9 +168,31 @@ npm start
 
 ### Node.js не найден
 
-1. Убедитесь, что Node.js установлен
-2. Добавьте Node.js в PATH
-3. Перезапустите терминал
+**Симптомы:**
+```
+'npm' is not recognized as an internal or external command
+```
+
+**Решения:**
+
+1. **Установите Node.js:**
+   - Скачайте с [nodejs.org](https://nodejs.org/) (рекомендуется LTS версия)
+   - ⚠️ **Важно для Windows:** При установке отметьте опцию **"Add to PATH"**
+   - Завершите установку
+
+2. **После установки:**
+   - **Закройте и снова откройте PowerShell/терминал** (это необходимо для обновления PATH)
+   - Проверьте установку:
+     ```powershell
+     node --version
+     npm --version
+     ```
+
+3. **Если Node.js установлен, но не найден:**
+   - Добавьте Node.js в PATH вручную
+   - Или переустановите Node.js с опцией "Add to PATH"
+
+**Подробная инструкция:** см. [frontend/INSTALL_NODEJS.md](frontend/INSTALL_NODEJS.md)
 
 ### Ошибки при установке зависимостей
 

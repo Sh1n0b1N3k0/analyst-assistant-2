@@ -28,7 +28,8 @@ analyst-assistant-2/
 ## Быстрый старт
 
 > ⚠️ **Перед началом:** Убедитесь, что у вас установлены [Python 3.8+](https://www.python.org/downloads/) и [Node.js 16+](https://nodejs.org/).  
-> Подробнее см. [REQUIREMENTS.md](REQUIREMENTS.md)
+> Подробнее см. [REQUIREMENTS.md](REQUIREMENTS.md)  
+> **Быстрая инструкция:** [QUICK_START.md](QUICK_START.md)
 
 ### Установка зависимостей
 
