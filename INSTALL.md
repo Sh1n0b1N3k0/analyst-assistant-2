@@ -9,19 +9,29 @@
 
 ## Автоматическая установка
 
-### Windows
+### Windows (PowerShell или Command Prompt)
 
 **Backend:**
-```bash
+```powershell
 cd backend
-install.bat
+.\install.bat
 ```
 
+Или просто дважды кликните на файл `install.bat` в проводнике Windows.
+
 **Frontend:**
-```bash
+```powershell
 cd frontend
-install.bat
+.\install.bat
 ```
+
+**Если проблемы с SSL:**
+```powershell
+cd backend
+.\install_ssl_fix.bat
+```
+
+> ⚠️ **Важно для Windows:** Не используйте команду `chmod` - это команда Linux/Mac. В Windows `.bat` файлы уже исполняемые.
 
 ### Linux/Mac
 
@@ -37,6 +47,13 @@ chmod +x install.sh
 cd frontend
 chmod +x install.sh
 ./install.sh
+```
+
+**Если проблемы с SSL:**
+```bash
+cd backend
+chmod +x install_ssl_fix.sh
+./install_ssl_fix.sh
 ```
 
 ## Ручная установка

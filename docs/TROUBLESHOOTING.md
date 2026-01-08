@@ -17,11 +17,15 @@ self-signed certificate in certificate chain
 
 #### 1. Использовать специальный скрипт (самый простой способ)
 
-**Windows:**
-```bash
+**Windows (PowerShell или Command Prompt):**
+```powershell
 cd backend
-install_ssl_fix.bat
+.\install_ssl_fix.bat
 ```
+
+Или просто дважды кликните на файл `install_ssl_fix.bat` в проводнике Windows.
+
+> ⚠️ **Важно:** В Windows не используйте команду `chmod` - это команда Linux/Mac. В Windows `.bat` файлы уже исполняемые.
 
 **Linux/Mac:**
 ```bash

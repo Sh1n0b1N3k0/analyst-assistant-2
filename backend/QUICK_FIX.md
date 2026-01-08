@@ -2,11 +2,21 @@
 
 ## Проблема: SSL Certificate Verify Failed
 
-Если вы получили ошибку `CERTIFICATE_VERIFY_FAILED`, выполните:
+Если вы получили ошибку `CERTIFICATE_VERIFY_FAILED`:
 
+### Windows:
+```powershell
+cd backend
+.\install_ssl_fix.bat
+```
+
+Или просто дважды кликните на `install_ssl_fix.bat` в проводнике.
+
+### Linux/Mac:
 ```bash
 cd backend
-install_ssl_fix.bat
+chmod +x install_ssl_fix.sh
+./install_ssl_fix.sh
 ```
 
 ## Проблема: Ошибка компиляции pydantic-core
@@ -23,8 +33,15 @@ pip install -r requirements_simple.txt --trusted-host pypi.org --trusted-host py
 
 После установки проверьте:
 
-```bash
+**Windows:**
+```powershell
 venv\Scripts\activate
+pip list
+```
+
+**Linux/Mac:**
+```bash
+source venv/bin/activate
 pip list
 ```
 
@@ -37,8 +54,15 @@ pip list
 
 ## Запуск
 
-```bash
+**Windows:**
+```powershell
 venv\Scripts\activate
+python run.py
+```
+
+**Linux/Mac:**
+```bash
+source venv/bin/activate
 python run.py
 ```
 

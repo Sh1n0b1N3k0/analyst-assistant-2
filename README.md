@@ -56,7 +56,9 @@ chmod +x install.sh && ./install.sh
 
 Подробные инструкции см. в [INSTALL.md](INSTALL.md) и [docs/SETUP.md](docs/SETUP.md)
 
-> ⚠️ **Проблемы с SSL?** Если у вас ошибка `CERTIFICATE_VERIFY_FAILED`, используйте `install_ssl_fix.bat` (Windows) или `install_ssl_fix.sh` (Linux/Mac).  
+> ⚠️ **Проблемы с SSL?** Если у вас ошибка `CERTIFICATE_VERIFY_FAILED`:
+> - **Windows:** Запустите `install_ssl_fix.bat` (просто дважды кликните или выполните в PowerShell)
+> - **Linux/Mac:** Выполните `chmod +x install_ssl_fix.sh && ./install_ssl_fix.sh`  
 > Подробнее: [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
 
 ### Запуск
