@@ -142,6 +142,39 @@ pip install -r requirements_simple.txt --trusted-host pypi.org --trusted-host py
 
 4. Попробуйте `python3` вместо `python` (Linux/Mac)
 
+### Конфликт версий TypeScript при установке frontend
+
+**Симптомы:**
+```
+npm error ERESOLVE could not resolve
+npm error Conflicting peer dependency: typescript@4.9.5
+```
+
+**Причина:**
+`react-scripts@5.0.1` поддерживает только TypeScript версий 3.2.1 или 4.x, но в `package.json` указана версия 5.x.
+
+**Решения:**
+
+#### 1. Использовать TypeScript 4.9.5 (рекомендуется)
+
+Версия TypeScript в `package.json` уже обновлена. Просто выполните:
+
+```powershell
+npm install
+```
+
+#### 2. Использовать --legacy-peer-deps
+
+Если нужно использовать TypeScript 5:
+
+```powershell
+npm install --legacy-peer-deps
+```
+
+⚠️ **Внимание:** Это может привести к несовместимостям.
+
+**Подробнее:** см. [frontend/INSTALL_TYPESCRIPT_FIX.md](../frontend/INSTALL_TYPESCRIPT_FIX.md)
+
 ### Node.js не найден
 
 **Симптомы:**

@@ -50,9 +50,16 @@ echo Установка зависимостей...
 npm install
 
 if errorlevel 1 (
-    echo ОШИБКА: Не удалось установить зависимости
-    pause
-    exit /b 1
+    echo.
+    echo Попытка установки с --legacy-peer-deps...
+    npm install --legacy-peer-deps
+    if errorlevel 1 (
+        echo ОШИБКА: Не удалось установить зависимости
+        echo.
+        echo Если проблема с TypeScript, см. INSTALL_TYPESCRIPT_FIX.md
+        pause
+        exit /b 1
+    )
 )
 
 echo.
