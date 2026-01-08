@@ -165,3 +165,68 @@ npm start
    ```
 
 3. Попробуйте установить зависимости заново
+
+### Ошибка SSL: CERTIFICATE_VERIFY_FAILED
+
+Если вы получаете ошибку `[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed`, это обычно происходит в корпоративных сетях с прокси-серверами.
+
+**Решение 1: Использовать специальный скрипт (рекомендуется)**
+
+**Windows:**
+```bash
+cd backend
+install_ssl_fix.bat
+```
+
+**Linux/Mac:**
+```bash
+cd backend
+chmod +x install_ssl_fix.sh
+./install_ssl_fix.sh
+```
+
+**Решение 2: Ручная установка с обходом SSL**
+
+1. Активируйте виртуальное окружение:
+   ```bash
+   # Windows
+   venv\Scripts\activate
+   
+   # Linux/Mac
+   source venv/bin/activate
+   ```
+
+2. Установите зависимости с опциями обхода SSL:
+   ```bash
+   pip install --upgrade pip --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --no-cache-dir
+   ```
+   
+3. Если возникают проблемы с компиляцией pydantic-core, используйте упрощенный файл требований:
+   ```bash
+   pip install -r requirements_simple.txt --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --no-cache-dir
+   ```
+   
+   Или попробуйте с предкомпилированными пакетами:
+   ```bash
+   pip install -r requirements.txt --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --no-cache-dir --only-binary :all:
+   ```
+
+**Решение 3: Настройка pip.conf (постоянное решение)**
+
+Создайте файл `pip.conf`:
+
+**Windows:** `%APPDATA%\pip\pip.ini`
+**Linux/Mac:** `~/.pip/pip.conf`
+
+Добавьте в файл:
+```ini
+[global]
+trusted-host = pypi.org
+               pypi.python.org
+               files.pythonhosted.org
+```
+
+После этого обычная установка `pip install -r requirements.txt` будет работать без ошибок SSL.
+
+**⚠️ Внимание:** Отключение проверки SSL снижает безопасность. Используйте только в доверенных корпоративных сетях.
+

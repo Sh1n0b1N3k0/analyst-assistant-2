@@ -21,8 +21,13 @@ echo "Активация виртуального окружения..."
 source venv/bin/activate
 
 echo "Установка зависимостей..."
-pip install --upgrade pip
-pip install -r requirements.txt
+echo "Обновление pip..."
+pip install --upgrade pip --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org || \
+pip install --upgrade pip --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --no-cache-dir
+
+echo "Установка зависимостей проекта..."
+pip install -r requirements.txt --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org || \
+pip install -r requirements.txt --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --no-cache-dir
 
 if [ $? -ne 0 ]; then
     echo "ОШИБКА: Не удалось установить зависимости"

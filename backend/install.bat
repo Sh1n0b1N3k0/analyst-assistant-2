@@ -23,8 +23,19 @@ echo Активация виртуального окружения...
 call venv\Scripts\activate.bat
 
 echo Установка зависимостей...
-pip install --upgrade pip
-pip install -r requirements.txt
+echo Обновление pip...
+pip install --upgrade pip --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org
+if errorlevel 1 (
+    echo Попытка установки без проверки SSL сертификатов...
+    pip install --upgrade pip --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --no-cache-dir
+)
+
+echo Установка зависимостей проекта...
+pip install -r requirements.txt --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org
+if errorlevel 1 (
+    echo Попытка установки без проверки SSL сертификатов и кэша...
+    pip install -r requirements.txt --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --no-cache-dir
+)
 
 if errorlevel 1 (
     echo ОШИБКА: Не удалось установить зависимости
