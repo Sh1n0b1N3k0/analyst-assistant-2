@@ -27,25 +27,51 @@ analyst-assistant-2/
 
 ## Быстрый старт
 
-Подробные инструкции по установке см. в [docs/SETUP.md](docs/SETUP.md)
+> ⚠️ **Перед началом:** Убедитесь, что у вас установлены [Python 3.8+](https://www.python.org/downloads/) и [Node.js 16+](https://nodejs.org/).  
+> Подробнее см. [REQUIREMENTS.md](REQUIREMENTS.md)
 
-### Backend
+### Установка зависимостей
+
+**Windows:**
+```bash
+# Backend
+cd backend
+install.bat
+
+# Frontend
+cd frontend
+install.bat
+```
+
+**Linux/Mac:**
+```bash
+# Backend
+cd backend
+chmod +x install.sh && ./install.sh
+
+# Frontend
+cd frontend
+chmod +x install.sh && ./install.sh
+```
+
+Подробные инструкции см. в [INSTALL.md](INSTALL.md) и [docs/SETUP.md](docs/SETUP.md)
+
+### Запуск
+
+**Backend:**
 ```bash
 cd backend
-python -m venv venv
-# Windows: venv\Scripts\activate
-# Linux/Mac: source venv/bin/activate
-pip install -r requirements.txt
+venv\Scripts\activate  # Windows
+# или source venv/bin/activate  # Linux/Mac
 python run.py
 ```
 
-API будет доступен на http://localhost:8000
+API будет доступен на http://localhost:8000  
 Документация API: http://localhost:8000/docs
 
-### Frontend
+**Frontend:**
 ```bash
 cd frontend
-npm install
 npm start
 ```
 
