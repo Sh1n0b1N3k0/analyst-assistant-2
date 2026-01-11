@@ -100,22 +100,31 @@ npm start
 
 Приложение будет доступно на http://localhost:3000
 
-## Docker развертывание
+## Docker развертывание (рекомендуется)
 
-Для быстрого развертывания всей системы в Docker:
+Для быстрого локального развертывания всей системы в Docker:
 
+### Windows:
 ```bash
-# Подготовка
+start-docker.bat
+```
+
+### Linux/Mac:
+```bash
+chmod +x start-docker.sh
+./start-docker.sh
+```
+
+### Или вручную:
+```bash
+# 1. Настройка
 cp env.docker.example .env
 
-# Запуск всех сервисов
+# 2. Запуск всех сервисов
 docker-compose up -d
 
-# Просмотр логов
-docker-compose logs -f
-
-# Остановка
-docker-compose down
+# 3. Проверка
+docker-compose ps
 ```
 
 После запуска:
@@ -123,7 +132,22 @@ docker-compose down
 - **Backend API**: http://localhost:8000
 - **API Документация**: http://localhost:8000/docs
 
-Подробная инструкция: [docs/DOCKER.md](docs/DOCKER.md)
+**Остановка:**
+```bash
+# Windows
+stop-docker.bat
+
+# Linux/Mac
+./stop-docker.sh
+
+# Или вручную
+docker-compose down
+```
+
+Подробные инструкции:
+- [LOCAL_DOCKER_SETUP.md](LOCAL_DOCKER_SETUP.md) - Локальное развертывание
+- [DOCKER_QUICKSTART.md](DOCKER_QUICKSTART.md) - Быстрый старт
+- [docs/DOCKER.md](docs/DOCKER.md) - Полная документация
 
 ## Технологии
 
