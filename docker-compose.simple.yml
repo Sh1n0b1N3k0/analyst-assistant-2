@@ -1,4 +1,7 @@
-#version: '3.8'
+# Упрощенная версия docker-compose для случаев, когда основной не работает
+# Используйте: docker-compose -f docker-compose.simple.yml up -d
+
+version: '3.8'
 
 services:
   # PostgreSQL база данных
@@ -69,11 +72,11 @@ services:
       - analyst-assistant-network
     restart: unless-stopped
 
-  # Frontend
+  # Frontend - используем альтернативный Dockerfile
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.alternative
     container_name: analyst-assistant-frontend
     ports:
       - "${FRONTEND_PORT:-3000}:80"
