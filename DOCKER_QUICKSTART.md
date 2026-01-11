@@ -36,10 +36,12 @@ docker-compose up -d
 
 Эта команда:
 - ✅ Соберет образы для backend и frontend
-- ✅ Запустит PostgreSQL базу данных
-- ✅ Автоматически инициализирует базу данных
+- ✅ Запустит локальный Supabase PostgreSQL в Docker контейнере
+- ✅ Автоматически применит схему базы данных
 - ✅ Запустит backend API
 - ✅ Запустит frontend
+
+> ✅ **Готово к использованию:** Локальный Supabase настраивается автоматически, дополнительная настройка не требуется.
 
 ### Шаг 3: Проверка
 
@@ -68,8 +70,8 @@ docker-compose logs -f backend
 # Только frontend
 docker-compose logs -f frontend
 
-# Только база данных
-docker-compose logs -f db
+# Только backend (для проверки подключения к Supabase)
+docker-compose logs -f backend
 ```
 
 ### Остановка

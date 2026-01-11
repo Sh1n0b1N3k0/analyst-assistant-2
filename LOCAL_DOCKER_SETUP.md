@@ -29,10 +29,12 @@ docker-compose up -d
 
 Эта команда автоматически:
 - ✅ Соберет образы backend и frontend
-- ✅ Запустит PostgreSQL базу данных
-- ✅ Инициализирует базу данных (выполнит `database/init_database.sql`)
+- ✅ Запустит локальный Supabase PostgreSQL в Docker контейнере
+- ✅ Автоматически применит схему базы данных из `database/init_database.sql`
 - ✅ Запустит backend API на порту 8000
 - ✅ Запустит frontend на порту 3000
+
+> ✅ **Готово к использованию:** Локальный Supabase настраивается автоматически, дополнительная настройка не требуется.
 
 ### 3. Проверка работы
 
@@ -51,7 +53,7 @@ docker-compose ps
 ```
 
 Должны быть запущены 3 контейнера:
-- `analyst-assistant-db` (PostgreSQL)
+- `analyst-assistant-supabase-db` (Локальный Supabase PostgreSQL)
 - `analyst-assistant-backend` (FastAPI)
 - `analyst-assistant-frontend` (Nginx + React)
 
@@ -67,8 +69,8 @@ docker-compose logs -f backend
 # Только frontend
 docker-compose logs -f frontend
 
-# Только база данных
-docker-compose logs -f db
+# Только база данных Supabase
+docker-compose logs -f supabase-db
 ```
 
 ## Управление
@@ -79,13 +81,13 @@ docker-compose logs -f db
 docker-compose down
 ```
 
-### Остановка с удалением данных БД
+### Остановка с удалением volumes
 
 ```bash
 docker-compose down -v
 ```
 
-⚠️ **Внимание:** Это удалит все данные из базы данных!
+⚠️ **Внимание:** Это удалит все данные из локального Supabase и локальные volumes (uploads)!
 
 ### Перезапуск
 
@@ -101,29 +103,36 @@ docker-compose up -d --build
 
 ## Работа с базой данных
 
-### Подключение к PostgreSQL
+### Подключение к локальному Supabase
 
 ```bash
-docker-compose exec db psql -U postgres -d requirements_db
+# Через docker-compose
+docker-compose exec supabase-db psql -U postgres -d postgres
+
+# Или напрямую (если psql установлен локально)
+psql -h localhost -p 5432 -U postgres -d postgres
 ```
+
+Пароль по умолчанию: `postgres` (или тот, что указан в `.env`)
 
 ### Выполнение SQL запросов
 
 ```bash
-docker-compose exec db psql -U postgres -d requirements_db -c "SELECT COUNT(*) FROM requirements;"
+# Через docker-compose
+docker-compose exec supabase-db psql -U postgres -d postgres -c "SELECT COUNT(*) FROM requirements;"
 ```
 
 ### Резервное копирование
 
 ```bash
-docker-compose exec db pg_dump -U postgres requirements_db > backup_$(date +%Y%m%d_%H%M%S).sql
+# Создать backup
+docker-compose exec supabase-db pg_dump -U postgres postgres > backup_$(date +%Y%m%d_%H%M%S).sql
+
+# Восстановить из backup
+docker-compose exec -T supabase-db psql -U postgres -d postgres < backup.sql
 ```
 
-### Восстановление из backup
-
-```bash
-docker-compose exec -T db psql -U postgres -d requirements_db < backup.sql
-```
+Подробнее: [docs/SUPABASE_SETUP.md](docs/SUPABASE_SETUP.md)
 
 ## Структура развертывания
 
@@ -132,12 +141,12 @@ docker-compose exec -T db psql -U postgres -d requirements_db < backup.sql
 │         Docker Network                   │
 │  analyst-assistant-network               │
 │                                          │
-│  ┌──────────┐  ┌──────────┐  ┌────────┐│
-│  │ Frontend │──│ Backend  │──│   DB   ││
-│  │ :80      │  │ :8000    │  │ :5432  ││
-│  └──────────┘  └──────────┘  └────────┘│
-│       │             │              │     │
-└───────┼─────────────┼──────────────┼─────┘
+│  ┌──────────┐  ┌──────────┐  ┌──────────────┐│
+│  │ Frontend │──│ Backend  │──│ Supabase DB ││
+│  │ :80      │  │ :8000    │  │   :5432     ││
+│  └──────────┘  └──────────┘  └──────────────┘│
+│       │             │              │         │
+└───────┼─────────────┼──────────────┼─────────┘
         │             │              │
     :3000          :8000          :5432
   (localhost)   (localhost)   (localhost)
@@ -147,11 +156,11 @@ docker-compose exec -T db psql -U postgres -d requirements_db < backup.sql
 
 - **3000** - Frontend (React приложение через Nginx)
 - **8000** - Backend API (FastAPI)
-- **5432** - PostgreSQL база данных
+- **5432** - Локальный Supabase PostgreSQL
 
 ## Volumes (хранилище данных)
 
-- `postgres_data` - данные PostgreSQL (сохраняются между перезапусками)
+- `supabase_db_data` - данные локального Supabase PostgreSQL (сохраняются между перезапусками)
 - `backend_uploads` - загруженные файлы backend
 
 ## Переменные окружения
@@ -159,10 +168,10 @@ docker-compose exec -T db psql -U postgres -d requirements_db < backup.sql
 Все настройки находятся в файле `.env`:
 
 ```env
-# PostgreSQL
+# Локальный Supabase PostgreSQL
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
-POSTGRES_DB=requirements_db
+POSTGRES_DB=postgres
 POSTGRES_PORT=5432
 
 # Backend

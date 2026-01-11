@@ -104,6 +104,9 @@ npm start
 
 Для быстрого локального развертывания всей системы в Docker:
 
+> ⚠️ **Важно:** Локальный Supabase запускается автоматически в Docker контейнере.  
+> Схема базы данных применяется автоматически при первом запуске.
+
 ### Windows:
 ```bash
 start-docker.bat
@@ -159,12 +162,12 @@ docker-compose down
 
 - **Backend**: Python, FastAPI, SQLAlchemy
 - **Frontend**: React, TypeScript
-- **Database**: SQLite (разработка) / PostgreSQL (продакшн)
+- **Database**: Локальный Supabase (PostgreSQL в Docker)
 - **Containerization**: Docker, Docker Compose
 
 ## База данных
 
-Проект использует расширенную схему базы данных PostgreSQL для управления требованиями SRS.
+Проект использует локальный Supabase (PostgreSQL в Docker контейнере) с расширенной схемой базы данных для управления требованиями SRS.
 
 ### Основные возможности схемы:
 
@@ -182,12 +185,12 @@ docker-compose down
 
 ### Инициализация базы данных:
 
-**PostgreSQL (рекомендуется):**
+**Локальный Supabase (автоматически):**
+Схема базы данных применяется автоматически при первом запуске Docker Compose через файл `database/init_database.sql`.
+
+**Ручная инициализация (если нужно):**
 ```bash
-psql -U postgres -d requirements_db -f database/init_database.sql
+docker-compose exec supabase-db psql -U postgres -d postgres -f /docker-entrypoint-initdb.d/init_database.sql
 ```
 
-**SQLite (для разработки):**
-База данных создается автоматически при первом запуске.
-
-Подробнее: [docs/DATABASE_SETUP.md](docs/DATABASE_SETUP.md) и [database/README.md](database/README.md)
+Подробнее: [docs/SUPABASE_SETUP.md](docs/SUPABASE_SETUP.md) и [database/README.md](database/README.md)
