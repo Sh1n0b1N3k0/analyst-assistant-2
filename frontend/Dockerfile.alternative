@@ -1,22 +1,16 @@
-# Альтернативный Dockerfile для frontend
-# Используйте этот вариант, если основной Dockerfile не работает
-
+# Альтернативный Dockerfile для frontend - максимально упрощенный
 FROM node:18 AS builder
 
 WORKDIR /app
 
-# Настраиваем npm для обхода проблем с SSL сертификатами ПЕРЕД установкой
-RUN npm config set strict-ssl false
-RUN npm config set registry https://registry.npmjs.org/
+# Создаем .npmrc файл для обхода проблем с SSL сертификатами
+RUN echo "strict-ssl=false" > /root/.npmrc && \
+    echo "registry=https://registry.npmjs.org/" >> /root/.npmrc
 
-# Копируем package.json и .npmrc (если есть)
+# Копируем package.json
 COPY package.json ./
-COPY .npmrc* ./
 
-# Если .npmrc скопирован, применяем его настройки
-RUN if [ -f .npmrc ]; then cat .npmrc >> ~/.npmrc; fi
-
-# Устанавливаем зависимости без package-lock.json
+# Устанавливаем зависимости
 RUN npm install --legacy-peer-deps
 
 # Копируем исходный код

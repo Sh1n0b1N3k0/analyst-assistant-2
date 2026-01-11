@@ -15,3 +15,5 @@ dist
 Thumbs.db
 coverage
 .nyc_output
+# НЕ игнорируем package-lock.json - он нужен для стабильной сборки
+# package-lock.json

@@ -5,22 +5,15 @@ FROM node:18-slim AS builder
 
 WORKDIR /app
 
-# Настраиваем npm для обхода проблем с SSL сертификатами ПЕРЕД установкой
-RUN npm config set strict-ssl false
-RUN npm config set registry https://registry.npmjs.org/
+# Создаем .npmrc файл для обхода проблем с SSL сертификатами
+RUN echo "strict-ssl=false" > /root/.npmrc && \
+    echo "registry=https://registry.npmjs.org/" >> /root/.npmrc && \
+    cat /root/.npmrc
 
-# Копируем package.json и .npmrc (если есть)
-COPY package.json ./
-COPY .npmrc* ./
+# Копируем package.json и package-lock.json
+COPY package.json package-lock.json* ./
 
-# Если .npmrc скопирован, применяем его настройки
-RUN if [ -f .npmrc ]; then cat .npmrc >> ~/.npmrc; fi
-
-# Устанавливаем зависимости без package-lock.json для избежания конфликтов
-# Сначала устанавливаем react-scripts явно
-RUN npm install react-scripts@5.0.1 --legacy-peer-deps --save
-
-# Затем устанавливаем остальные зависимости
+# Устанавливаем все зависимости
 RUN npm install --legacy-peer-deps
 
 # Копируем исходный код
@@ -30,9 +23,6 @@ COPY . .
 ENV NODE_ENV=production
 ENV GENERATE_SOURCEMAP=false
 ENV CI=false
-
-# Проверяем установку перед сборкой
-RUN npm list react-scripts
 
 # Собираем приложение
 RUN npm run build
