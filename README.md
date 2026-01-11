@@ -100,11 +100,37 @@ npm start
 
 Приложение будет доступно на http://localhost:3000
 
+## Docker развертывание
+
+Для быстрого развертывания всей системы в Docker:
+
+```bash
+# Подготовка
+cp env.docker.example .env
+
+# Запуск всех сервисов
+docker-compose up -d
+
+# Просмотр логов
+docker-compose logs -f
+
+# Остановка
+docker-compose down
+```
+
+После запуска:
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:8000
+- **API Документация**: http://localhost:8000/docs
+
+Подробная инструкция: [docs/DOCKER.md](docs/DOCKER.md)
+
 ## Технологии
 
 - **Backend**: Python, FastAPI, SQLAlchemy
 - **Frontend**: React, TypeScript
 - **Database**: SQLite (разработка) / PostgreSQL (продакшн)
+- **Containerization**: Docker, Docker Compose
 
 ## База данных
 

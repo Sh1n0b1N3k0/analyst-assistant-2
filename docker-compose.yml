@@ -1,0 +1,91 @@
+version: '3.8'
+
+services:
+  # PostgreSQL база данных
+  db:
+    image: postgres:15-alpine
+    container_name: analyst-assistant-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-requirements_db}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init_database.sql:/docker-entrypoint-initdb.d/init_database.sql:ro
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - analyst-assistant-network
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: analyst-assistant-backend
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-requirements_db}
+      API_HOST: 0.0.0.0
+      API_PORT: 8000
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000,http://localhost:80,http://frontend:80}
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+      - backend_uploads:/app/uploads
+    command: >
+      sh -c "
+        echo 'Waiting for database to be ready...' &&
+        python -c 'import psycopg2; import sys; import time;
+        for i in range(30):
+          try:
+            conn = psycopg2.connect(\"dbname=${POSTGRES_DB:-requirements_db} user=${POSTGRES_USER:-postgres} password=${POSTGRES_PASSWORD:-postgres} host=db\")
+            conn.close()
+            print(\"Database is ready!\")
+            sys.exit(0)
+          except Exception as e:
+            print(f\"Waiting for database... ({i+1}/30): {e}\")
+            time.sleep(2)
+        print(\"Database connection failed after 30 attempts\")
+        sys.exit(1)' &&
+        uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+      "
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - analyst-assistant-network
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: analyst-assistant-frontend
+    ports:
+      - "${FRONTEND_PORT:-3000}:80"
+    depends_on:
+      - backend
+    networks:
+      - analyst-assistant-network
+
+volumes:
+  postgres_data:
+    driver: local
+  backend_uploads:
+    driver: local
+
+networks:
+  analyst-assistant-network:
+    driver: bridge

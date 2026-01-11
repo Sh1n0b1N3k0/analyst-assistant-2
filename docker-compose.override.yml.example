@@ -1,0 +1,21 @@
+# Пример файла для переопределения настроек docker-compose.yml
+# Скопируйте этот файл в docker-compose.override.yml и настройте под свои нужды
+
+version: '3.8'
+
+services:
+  backend:
+    environment:
+      # Переопределите переменные окружения для backend
+      # DATABASE_URL: postgresql://user:password@db:5432/requirements_db
+    volumes:
+      # Для разработки можно монтировать код
+      - ./backend:/app
+
+  frontend:
+    # Для разработки можно использовать dev сервер
+    # build:
+    #   target: development
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
