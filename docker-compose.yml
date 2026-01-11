@@ -1,4 +1,4 @@
-version: '3.8'
+#version: '3.8'
 
 services:
   # PostgreSQL база данных
@@ -74,6 +74,8 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        - NODE_ENV=production
     container_name: analyst-assistant-frontend
     ports:
       - "${FRONTEND_PORT:-3000}:80"
