@@ -93,6 +93,32 @@ SELECT * FROM requirements LIMIT 10;
 
 ## Troubleshooting
 
+### Ошибка: "password authentication failed for user postgres"
+
+**Причина:** Пароль в DBeaver не совпадает с паролем в базе данных.
+
+**Решение:**
+
+1. **Проверьте пароль в файле `.env`:**
+   ```bash
+   # В Windows PowerShell
+   Get-Content .env | Select-String "POSTGRES_PASSWORD"
+   ```
+
+2. **Используйте пароль из `.env` файла в DBeaver**
+
+3. **Если пароль не работает, установите его заново:**
+   ```bash
+   docker-compose exec supabase-db psql -U postgres -d postgres -c "ALTER USER postgres WITH PASSWORD 'postgres';"
+   ```
+
+4. **Проверьте подключение:**
+   ```bash
+   docker-compose exec supabase-db psql -U postgres -d requirements_db -c "SELECT 1;"
+   ```
+
+Подробнее: [DBEAVER_PASSWORD_FIX.md](DBEAVER_PASSWORD_FIX.md)
+
 ### Ошибка: "Connection refused"
 
 **Причина:** База данных не запущена или порт занят.
