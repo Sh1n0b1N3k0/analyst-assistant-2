@@ -31,6 +31,11 @@ services:
     container_name: analyst-assistant-backend
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-requirements_db}
+      POSTGRES_DB: ${POSTGRES_DB:-requirements_db}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
       API_HOST: 0.0.0.0
       API_PORT: 8000
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000,http://localhost:80,http://frontend:80}
@@ -44,19 +49,7 @@ services:
       - backend_uploads:/app/uploads
     command: >
       sh -c "
-        echo 'Waiting for database to be ready...' &&
-        python -c 'import psycopg2; import sys; import time;
-        for i in range(30):
-          try:
-            conn = psycopg2.connect(\"dbname=${POSTGRES_DB:-requirements_db} user=${POSTGRES_USER:-postgres} password=${POSTGRES_PASSWORD:-postgres} host=db\")
-            conn.close()
-            print(\"Database is ready!\")
-            sys.exit(0)
-          except Exception as e:
-            print(f\"Waiting for database... ({i+1}/30): {e}\")
-            time.sleep(2)
-        print(\"Database connection failed after 30 attempts\")
-        sys.exit(1)' &&
+        python wait-for-db.py &&
         uvicorn main:app --host 0.0.0.0 --port 8000 --reload
       "
     healthcheck:
