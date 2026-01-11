@@ -5,8 +5,13 @@ FROM node:18-slim AS builder
 
 WORKDIR /app
 
-# Копируем package.json
+# Копируем package.json и .npmrc (если есть)
 COPY package.json ./
+COPY .npmrc* ./
+
+# Настраиваем npm для обхода проблем с SSL сертификатами (если .npmrc не скопирован)
+RUN npm config set strict-ssl false || true
+RUN npm config set registry https://registry.npmjs.org/ || true
 
 # Устанавливаем зависимости без package-lock.json для избежания конфликтов
 # Сначала устанавливаем react-scripts явно
