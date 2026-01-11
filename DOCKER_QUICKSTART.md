@@ -9,9 +9,22 @@
 
 ### Шаг 1: Настройка переменных окружения
 
+**Windows (Command Prompt):**
+```cmd
+copy env.docker.example .env
+```
+
+**Windows (PowerShell):**
+```powershell
+Copy-Item env.docker.example .env
+```
+
+**Linux/Mac:**
 ```bash
 cp env.docker.example .env
 ```
+
+Или просто запустите `start-docker.bat` (Windows) / `start-docker.sh` (Linux/Mac) - скрипт создаст файл автоматически.
 
 При необходимости отредактируйте `.env` файл (по умолчанию настройки подходят для разработки).
 

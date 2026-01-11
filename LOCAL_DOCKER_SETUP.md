@@ -4,6 +4,17 @@
 
 ### 1. Настройка переменных окружения
 
+**Windows (Command Prompt):**
+```cmd
+copy env.docker.example .env
+```
+
+**Windows (PowerShell):**
+```powershell
+Copy-Item env.docker.example .env
+```
+
+**Linux/Mac:**
 ```bash
 cp env.docker.example .env
 ```

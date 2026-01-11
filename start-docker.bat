@@ -24,10 +24,16 @@ if errorlevel 1 (
 
 REM Проверка наличия .env файла
 if not exist .env (
-    echo Создание файла .env из примера...
-    copy env.docker.example .env >nul
-    echo Файл .env создан. При необходимости отредактируйте его.
-    echo.
+    if exist env.docker.example (
+        echo Создание файла .env из примера...
+        copy env.docker.example .env >nul
+        echo Файл .env создан. При необходимости отредактируйте его.
+        echo.
+    ) else (
+        echo ВНИМАНИЕ: Файл env.docker.example не найден!
+        echo Создайте файл .env вручную с необходимыми переменными.
+        echo.
+    )
 )
 
 echo Запуск всех сервисов...

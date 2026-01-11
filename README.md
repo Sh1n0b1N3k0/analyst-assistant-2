@@ -116,14 +116,18 @@ chmod +x start-docker.sh
 ```
 
 ### Или вручную:
-```bash
-# 1. Настройка
-cp env.docker.example .env
 
-# 2. Запуск всех сервисов
+**Windows:**
+```cmd
+copy env.docker.example .env
 docker-compose up -d
+docker-compose ps
+```
 
-# 3. Проверка
+**Linux/Mac:**
+```bash
+cp env.docker.example .env
+docker-compose up -d
 docker-compose ps
 ```
 
@@ -133,7 +137,7 @@ docker-compose ps
 - **API Документация**: http://localhost:8000/docs
 
 **Остановка:**
-```bash
+```cmd
 # Windows
 stop-docker.bat
 
@@ -143,6 +147,8 @@ stop-docker.bat
 # Или вручную
 docker-compose down
 ```
+
+**Для Windows также см.:** [WINDOWS_DOCKER.md](WINDOWS_DOCKER.md)
 
 Подробные инструкции:
 - [LOCAL_DOCKER_SETUP.md](LOCAL_DOCKER_SETUP.md) - Локальное развертывание

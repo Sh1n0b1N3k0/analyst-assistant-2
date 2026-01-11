@@ -11,9 +11,22 @@
 
 Скопируйте файл с переменными окружения:
 
+**Windows (Command Prompt):**
+```cmd
+copy env.docker.example .env
+```
+
+**Windows (PowerShell):**
+```powershell
+Copy-Item env.docker.example .env
+```
+
+**Linux/Mac:**
 ```bash
 cp env.docker.example .env
 ```
+
+Или используйте скрипт `start-docker.bat` / `start-docker.sh` - он создаст файл автоматически.
 
 При необходимости отредактируйте `.env` файл.
 
