@@ -5,13 +5,16 @@ FROM node:18 AS builder
 
 WORKDIR /app
 
+# Настраиваем npm для обхода проблем с SSL сертификатами ПЕРЕД установкой
+RUN npm config set strict-ssl false
+RUN npm config set registry https://registry.npmjs.org/
+
 # Копируем package.json и .npmrc (если есть)
 COPY package.json ./
 COPY .npmrc* ./
 
-# Настраиваем npm для обхода проблем с SSL сертификатами (если .npmrc не скопирован)
-RUN npm config set strict-ssl false || true
-RUN npm config set registry https://registry.npmjs.org/ || true
+# Если .npmrc скопирован, применяем его настройки
+RUN if [ -f .npmrc ]; then cat .npmrc >> ~/.npmrc; fi
 
 # Устанавливаем зависимости без package-lock.json
 RUN npm install --legacy-peer-deps
