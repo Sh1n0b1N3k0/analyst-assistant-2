@@ -1,0 +1,22 @@
+# Упрощенный Dockerfile - использует предсобранный build
+# Использование:
+# 1. Соберите frontend локально: cd frontend && npm install --legacy-peer-deps && npm run build
+# 2. Используйте этот Dockerfile: docker-compose -f docker-compose.yml build --build-arg USE_PREBUILT=true frontend
+
+FROM nginx:alpine
+
+# Копируем предсобранное приложение (если есть)
+ARG USE_PREBUILT=false
+COPY --from=builder /app/build /usr/share/nginx/html
+
+# Или копируем из локальной директории build
+COPY build /usr/share/nginx/html
+
+# Копируем конфигурацию nginx
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Открываем порт
+EXPOSE 80
+
+# Запускаем nginx
+CMD ["nginx", "-g", "daemon off;"]

@@ -5,10 +5,14 @@ FROM node:18-slim AS builder
 
 WORKDIR /app
 
-# Создаем .npmrc файл для обхода проблем с SSL сертификатами
-RUN echo "strict-ssl=false" > /root/.npmrc && \
-    echo "registry=https://registry.npmjs.org/" >> /root/.npmrc && \
-    cat /root/.npmrc
+# Устанавливаем переменные окружения для обхода SSL проблем
+ENV NODE_TLS_REJECT_UNAUTHORIZED=0
+ENV npm_config_strict_ssl=false
+
+# Настраиваем npm для обхода проблем с SSL сертификатами
+RUN npm config set strict-ssl false && \
+    npm config set registry https://registry.npmjs.org/ && \
+    npm config list
 
 # Копируем package.json и package-lock.json
 COPY package.json package-lock.json* ./
