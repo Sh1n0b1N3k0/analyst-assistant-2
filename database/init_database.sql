@@ -1,8 +1,17 @@
 -- ============================================================================
 -- Скрипт инициализации базы данных для системы управления требованиями
 -- Версия: 1.4.1
--- База данных: PostgreSQL
+-- База данных: PostgreSQL / Supabase
 -- ============================================================================
+
+-- Создание роли supabase_admin (если не существует) - требуется для Supabase PostgreSQL
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'supabase_admin') THEN
+        CREATE ROLE supabase_admin WITH SUPERUSER CREATEDB CREATEROLE LOGIN PASSWORD 'postgres';
+    END IF;
+END
+$$;
 
 -- Включение расширений
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";

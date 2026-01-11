@@ -162,7 +162,7 @@ docker-compose down
 
 - **Backend**: Python, FastAPI, SQLAlchemy
 - **Frontend**: React, TypeScript
-- **Database**: Локальный Supabase (PostgreSQL в Docker)
+- **Database**: Локальный Supabase PostgreSQL ([supabase/postgres](https://github.com/supabase/postgres))
 - **Containerization**: Docker, Docker Compose
 
 ## База данных

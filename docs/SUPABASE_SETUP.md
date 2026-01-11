@@ -6,14 +6,21 @@
 
 ## Локальный Supabase в Docker
 
-Локальный Supabase запускается автоматически при запуске `docker-compose up -d`. Используется официальный образ `supabase/postgres` с предустановленными расширениями PostgreSQL.
+Локальный Supabase запускается автоматически при запуске `docker-compose up -d`. Используется официальный образ [supabase/postgres](https://github.com/supabase/postgres) с предустановленными расширениями PostgreSQL.
+
+Этот образ содержит PostgreSQL с множеством полезных расширений, которые используются в Supabase, включая:
+- uuid-ossp, pg_trgm (для полнотекстового поиска)
+- И множество других расширений для работы с данными
 
 ### Что включено:
 
-- ✅ PostgreSQL 15 с расширениями (uuid-ossp, pg_trgm и др.)
+- ✅ PostgreSQL 15.14 с множеством расширений (uuid-ossp, pg_trgm, pgaudit, pgsodium, vault, vector и др.)
 - ✅ Автоматическая инициализация схемы базы данных
 - ✅ Персистентное хранилище данных (volumes)
 - ✅ Health checks для надежного запуска
+- ✅ Официальный образ от Supabase: [supabase/postgres](https://github.com/supabase/postgres)
+
+Полный список расширений см. в [репозитории Supabase PostgreSQL](https://github.com/supabase/postgres)
 
 ## Настройка переменных окружения
 

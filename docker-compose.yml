@@ -2,8 +2,9 @@
 
 services:
   # Supabase локальная база данных (PostgreSQL с расширениями)
+  # Используется официальный образ Supabase: https://github.com/supabase/postgres
   supabase-db:
-    image: postgres:15-alpine
+    image: supabase/postgres:15.14.1.071
     container_name: analyst-assistant-supabase-db
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
